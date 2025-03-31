@@ -1,25 +1,19 @@
-// firebase.js
-const { initializeApp } = require('firebase/app');
-const { getFirestore } = require('firebase/firestore');
-const { getAuth } = require('firebase/auth');
-const { getStorage } = require('firebase/storage');
+const serviceAccount = require('../ServiceAccountKey.json');
+const admin = require('firebase-admin');
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDr7OADT6n5yC9Ax5BVemxrQGypUFfq7KI",
-  authDomain: "industrial-management-sys1604.firebaseapp.com",
-  projectId: "industrial-management-sys1604",
-  storageBucket: "industrial-management-sys1604.appspot.com",
-  messagingSenderId: "117479346154",
-  appId: "1:117479346154:web:f0986e743721226c1c2c93",
-  measurementId: "G-6R0HBG1TJD"
-};
+// Initialize Firebase Admin
+const app = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: "industrial-management-sys1604.firebasestorage.app"
+});
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firestore
+const db = admin.firestore();
 
-// Initialize Firebase services
-const db = getFirestore(app);
-const auth = getAuth(app);
-const storage = getStorage(app);
+// Initialize Firebase Auth
+const auth = admin.auth();
+
+// Initialize Firebase Storage
+const storage = admin.storage();
 
 module.exports = { app, db, auth, storage };
